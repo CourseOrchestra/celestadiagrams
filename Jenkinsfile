@@ -10,6 +10,7 @@ node {
     }
     
     stage ('Build') {
+        sh 'mkdir -p target'
         sh 'python celestasql.py'
         sh 'python filter.py'
     }
