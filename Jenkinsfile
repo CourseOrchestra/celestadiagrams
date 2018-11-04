@@ -11,6 +11,7 @@ node {
     
     stage ('Build') {
         sh 'mkdir -p target'
+        sh 'rm -r target/*'
         sh 'mkdir -p target/celestasql'
         sh 'mkdir -p target/filter'
         sh 'python celestasql.py'
@@ -18,6 +19,7 @@ node {
     }
     
     stage('Publish') {
-        archive 'target/*.png'
+        archive 'target/celestasql/*.png'
+        archive 'target/filter/*.png'
     }
 }
