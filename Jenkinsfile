@@ -11,6 +11,8 @@ node {
     
     stage ('Build') {
         sh 'mkdir -p target'
+        sh 'mkdir -p target/celestasql'
+        sh 'mkdir -p target/filter'
         sh 'python celestasql.py'
         sh 'python filter.py'
     }

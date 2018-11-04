@@ -5,7 +5,6 @@
 # cairo, pango, pycairo packages for Linux/Cygwin
 # then you will need of course parcon Python library
 
-import sys
 from collections import OrderedDict
 
 from parcon.railroad import Then, Or, Token, Loop, Bullet, Nothing
@@ -47,6 +46,10 @@ productions = OrderedDict([
             text("'"),
             production("<grain version tag>"),
             text("'"),
+            Or(
+                Nothing(),
+                Then(text("WITH"), text("NO"), text("AUTOUPDATE"))
+            ),
             Bullet()
         )
     ),
@@ -118,6 +121,10 @@ productions = OrderedDict([
             Or(
                 Then(text("READ"), text("ONLY")),
                 Then(Or(text("NO"), Nothing()), text("VERSION"), text("CHECK"))
+            ),
+            Or(
+                Nothing(),
+                Then(text("NO"), text("AUTOUPDATE"))
             ),
             Bullet()
         )
@@ -564,6 +571,5 @@ options = {
 i = 0
 for pname in productions.keys():
     i += 1
-    draw_to_png(OrderedDict([(pname, productions[pname])]), options, 'target/' + str(i) + '.' + pname + '.png', True)
-
-    # draw_to_png(productions, options, sys.argv[1], True)
+    draw_to_png(OrderedDict([(pname, productions[pname])]), options, 'target/celestasql/' +
+                ('0' if i < 10 else '') + str(i) + '.' + pname + '.png', True)
